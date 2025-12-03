@@ -1,3 +1,5 @@
+/*Global Styles*/
+
 body, * {
   margin: 0 0 0 0;
   padding: 0 0 0 0;
@@ -27,6 +29,8 @@ button:hover {
   background-color: #EF0091;
 }
 
+/*Gotcha Tag*/
+
 .gotcha {
   padding: 20px;
   background-color: rgba(255,255,0,0.8);
@@ -35,14 +39,18 @@ button:hover {
 .gotcha p { font-size: 13px; margin-top: 10px; }
 .gotcha p .count { font-size: 16px; font-weight: bold; }
 
+/*Header*/
+
 .site-title {
   font-family: "Leckerli One", cursive;
   font-size: 80px;
   margin: 20px auto;
 }
 
+/*Preview*/
+
 .preview {
-  height: 300px;
+  height: 400px;
   width: 500px;
   margin: 10px auto;
   background-position: center;
@@ -65,32 +73,58 @@ button:hover {
   text-align: left;
 }
 
-.fb-share-container, .link-display {
+.fb-share-container, .twitter-share-container, .link-display {
   display: inline-block;
-  margin: 10px;
+  margin: 5px;
   vertical-align: middle;
 }
 
-.link-display {
-  padding: 2px;
-  width: 300px;
+.fb-share-container, .twitter-share-container {
+  padding: 8px 12px;
+  font-size: 10px;
+  text-transform: uppercase;
+  cursor: pointer;
 }
+
+.fb-share-container:hover, .twitter-share-container:hover {
+  opacity: 0.8;
+}
+
+.fb-share-container { background-color: #425F9C; }
+.twitter-share-container { background-color: #55ACEE; }
+
+.fb-share-container a, .twitter-share-container a {
+  color: white !important;
+  text-decoration: none !important;
+}
+
+.link-display {
+  padding: 6px 10px;
+  width: 300px;
+  border: none;
+  border-bottom: 2px solid #00aeef;
+  background-color: #f4f4f5;
+}
+
+.share-note { font-size: 12px; margin: 0 30px; }
+.share-note .highlighted { font-size: 14px; font-weight: bold;}
 
 #credits {
   font-size: 11px;
   margin-top: 50px;
   padding: 30px 0;
   background-color: #f1f1f2;
+  color: #616162;
 }
 
 #credits a {
-  color: #313132 !important;
+  color: #616162 !important;
 }
 
 #credits i {
   font-size: 20px;
   margin: 3px;
-  color: #313132 !important;
+  color: #616162 !important;
 }
 
 @media (max-width: 725px) {
@@ -112,6 +146,6 @@ button:hover {
   }
 
   .link-display {
-    width: 200px;
+    width: 160px;
   }
 }

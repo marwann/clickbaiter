@@ -10,7 +10,7 @@ const ref = new Firebase("https://clickbaiter.firebaseio.com/")
 app.use(express.static(__dirname + '/public'))
 
 app.get('/', (req, res, next) => {
-  req.send("hi")
+  next()
 })
 
 app.get('/article/:key', (req, res) => {
@@ -21,7 +21,7 @@ app.get('/article/:key', (req, res) => {
       site_name: "TheTruthDoctor.com",
       title: " I had no idea that Russia was actually unhealthy ... until this happened."
     }
-    var url = "https://clickbaiter.herokuapp.com/article/" + req.params.key
+    var url = "http://thisisreallyreal.com/article/" + req.params.key
 
     fs.readFile(__dirname + "/public/template.html", 'utf-8', (err, data) => {
       var html = data

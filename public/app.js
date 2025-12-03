@@ -68,30 +68,25 @@ class App extends React.Component {
           this.getBait()
         }
       })
+    } else {
+      this.getBait()
     }
   }
 
-  componentDidUpdate() {
-    // This makes sure that everytime we update the component, the FB data does too.
-    FB.XFBML.parse()
-  }
-
-  getImageLink(query) {
-    helper.getImage(query).then(imageLink => {
-      this.setState({
-        imageLink: imageLink || this.state.imageLink
-      })
-    })
-  }
-
   getBait(e) {
+    // Sometimes, it's not being triggered by a click event, hence the "if (e)"
     if (e) e.preventDefault()
+
+    // Reset the state to prepare for new stuffs. Title/description remain so it doesn't look blank.
     this.setState({
       shareable: false,
       imageLink: ""
     }, () => {
+
+      // This will store all the possible image search queries.
       let imageQueryOptions = []
 
+      // Choose a title template and loop through it to produce the proper madLibbed version.
       let title = helper.random(dictionary.titles).reduce((acc, n) => {
         if (typeof n == "string") {
           return acc + " " + n
@@ -104,6 +99,8 @@ class App extends React.Component {
 
       let randomImageQuery = helper.random(imageQueryOptions)
 
+      // The flickr API is sooo slow sometimes. Ekk. Need to find a
+      // better way or at least some sort of backup plan.
       helper.getImage(randomImageQuery).then(imageLink => {
         this.setState({
           title: title,
@@ -121,21 +118,20 @@ class App extends React.Component {
     let count = 0
 
     if (this.state.imageLink.length > 10){
-      console.log('1')
       let newKey = ref.child("articles").push({
         title: this.state.title,
         description: this.state.description,
         imageLink: this.state.imageLink,
-        site_name: this.state.site_name
+        site_name: this.state.site_name,
+        createdAt: Firebase.ServerValue.TIMESTAMP
       }, () => {
-        console.log('2')
         this.setState({
           shareLink: location.origin + "/article/" + newKey.key(),
           shareable: true
         })
       })
     } else {
-      console.log('failed to connect. can you try again?')
+      console.log('Failed to connect. can you try again?')
     }
   }
 
@@ -164,9 +160,17 @@ class App extends React.Component {
       return (
         <div>
           <div className="fb-share-container">
-            <div className="fb-share-button" data-href={this.state.shareLink} data-layout="button"></div>
+            <a href={"https://www.facebook.com/sharer/sharer.php?u=" + encodeURI(this.state.shareLink)} target="_blank">
+              <i className="fa fa-facebook"></i><span> Share</span>
+            </a>
+          </div>
+          <div className="twitter-share-container">
+            <a href={"https://twitter.com/intent/tweet?text=" + encodeURI(this.state.title + " >> " + this.state.shareLink)} target="_blank">
+              <i className="fa fa-twitter"></i><span> Tweet</span>
+            </a>
           </div>
           <input className="link-display" value={this.state.shareLink} readOnly />
+          <div className="share-note">Click to share or copy & paste it anywhere, and <span className="highlighted">it'll look like a real article.</span> Muahahaha.</div>
         </div>
       )
     }
